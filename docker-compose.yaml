@@ -1,0 +1,15 @@
+version: "3"
+services: 
+   app:
+     build: ./
+     ports: 
+     - "9000:9000"
+     - "9001:9001"
+     - "9002:9002"
+   diffy:
+     image: diffy/diffy
+     command: ["-candidate=app:9000","-master.primary=app:9001","-master.secondary=app:9002","-service.protocol=http","-serviceName=\"Test-Service\"","-proxy.port=:8880","-admin.port=:8881","-http.port=:8888","-rootUrl=localhost:8888"]
+     ports: 
+     - "8880:8880"
+     - "8881:8881"
+     - "8888:8888"
